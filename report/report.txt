@@ -1,0 +1,11 @@
+Introduction [domain of application, related work review, purpose/aim]
+
+Methods [data description, data preparation and feature selection, hybrid scheme, recommendation techniques/algorithms, evaluation methods]
+
+Implementation [input interface, recommendation algorithm, output interface]
+
+Evaluation Results [comparison against baseline implementation, comparison against hybrid recommenders in related studies, ethical issues]
+
+Conclusion [limitations, further developments]
+
+References
