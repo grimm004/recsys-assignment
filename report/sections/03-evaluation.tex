@@ -1,0 +1,49 @@
+\subsection{Comparison against Baseline}\label{subsec:baseline-comparison}
+The RMSE for rating predictions through random review sampling stabilised at around $0.85$ stars for CF and $0.92$ for the hybrid system.
+This means the hybrid was worse at rating prediction than CF alone.
+This is most likely from CBF over-fit causing unrealistic similarity values.
+
+As past reviews are excluded from results, novelty was not specifically measured.
+However, though testing of the hybrid system there are many cases that CBF overrules CF and recommends clumps of chain restaurants, which, at a higher level of abstraction, would lower novelty.
+Interestingly this did not occur in CF alone.
+
+Finally, for both CF and the hybrid system the coverage remained constant at approximately $50\%$.
+These results make sense since the subset of restaurants that can be recommended by both CF and CBF are the same.
+
+\subsection{Comparison against Related Hybrid Recommenders}\label{subsec:related-study-comparison}
+
+~\cite{sawant2013yelp} also uses the Yelp dataset.
+Combined with the fact it is a hybrid using CBF and CF make it a valuable comparison to this system.
+Their best model achieves nearly half the RMSE of their naive baseline at about $1.1$ stars.
+Given they were using more advanced ML methods it would appear this recommender has over-fit the rating data.
+
+~\cite{yulelee2016} uses review text and ratings to produce impressive RMSE values (around 0.6 stars) by combining between 4 and 5 sub-models with a linear combination hybrid scheme.
+Their memory-based CF was able to predict ratings with an RMSE of about $1.1$ but over-fit when changing to a model-based CF\@.
+
+\subsection{Ethical Issues}\label{subsec:ethical-issues}
+
+\subsubsection{Inferring Private Information}
+For example, health-based data knowledge and recommendations.
+It is directly related to the tradeoff of personalisation vs privacy.
+Users with specific dietary requirements are inclined to visit restaurants who can accommodate these.
+Apart from being explicitly mentioned in reviews, a machine learning model may be able to infer it from patterns in reviews and ratings, thus giving the system characteristics of a health recommender system~\cite{wiesner2014health}.
+This could lead to private medical conditions being deduced (as in~\cite{gottlieb2013method, merchant2019evaluating}) and at worst result in targeted advertising.
+To mitigate this, users could opt-out of having diet-related features influence recommendations.
+
+\subsubsection{Fairness to Businesses}
+Particularly during a pandemic, when the internet is relied on for recommendations, a business can be made or broken by the exposure it receives.
+Those in control of how much exposure a business has, could be responsible for its success or failure.
+In this system, this issue arises during pre-processing when restaurants with a low number of reviews are removed.
+
+To mitigate this, care must be taken not to introduce bias that may unfairly exclude businesses, particularly small ones.
+This may take the form of having a random or periodic quota for recommending businesses based more on CBF than CF or filtering out the most popular recommendations.
+Alternatively, the user could be asked if they would try out a smaller, less rated, related business.
+
+\subsubsection{Inadvertent Discrimination}
+In machine learning, discrimination is a large ethical topic.
+Users could inadvertently end up grouped together by protected characteristics if the underlying ML models learn from such features~\cite{abdollahi2018transparency}.
+This may place users in stereotypes or trap them in \textit{echo chambers}, preventing them from discovering a more diverse array of restaurants.
+For restaurants, it may reduce the diversity of their customer base.
+
+A mitigation for this would be trying to ensure the features in use remain as neutral as possible.
+As with the previous issue, this could be mitigated by occasionally introducing solely content-based recommendations.

@@ -1,0 +1,24 @@
+\subsection{Input Interface}\label{subsec:input-interface}
+The input command-line interface (CLI) is a state-based system.
+A pre-set list of commands with specified arguments are used for data input, which in turn updates the internal state.
+For example, when a user runs the~\texttt{userid <id>} command, the user data corresponding to the provided ID is fetched and stored.
+In addition to being shown on start, a~\texttt{privacy} command is provided to give the user information about the data and how it's being used.
+The CBF and CF recommenders have their models trained on load, so it is not possible to update user profiles.
+
+\subsection{Recommendation Algorithm}\label{subsec:recommendation-algorithm}
+The system is provided with the selected user ID and desired recommendation count ($n$).
+Previously reviewed restaurants are identified and calls down to the CF and CBF recommenders to retrieve the $n$ most similar candidates per reviewed restaurant.
+These are pooled together and have their similarities normalised.
+They are sorted by similarity and the $n$ most similar candidates are returned as the actual recommendations.
+
+The CBF recommender uses the \texttt{TfidfVectorizer} to pre-calculate phrase features and combines a resultant item-item similarity matrix with the similarity matrix from the other features.
+For rating predictions, CBF finds the $k$ nearest items to that being rated and returns them.
+
+The CF recommender uses a sparse user-item matrix and generates an item-item cosine similarity matrix to provide fast kNN lookup.
+CF uses a similar algorithm to CBF for rating prediction except that it uses $k$NN on user similarity.
+
+\subsection{Output Interface}\label{subsec:output-interface}
+Restaurant recommendations are provided in a user-friendly table-like format and consist of the recommendation number (rank), restaurant name and location, score, predicted star rating and whether the restaurant offers delivery or takeaway.
+As part of the Covid-19 adjustments there is an option for displaying restaurants with takeaway or delivery services.
+
+During loading, RAM usage spikes between 7--9 gigabytes, decreasing when temporary calculation data is freed up.

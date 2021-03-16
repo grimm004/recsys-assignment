@@ -1,0 +1,24 @@
+\subsection{Domain of Application}\label{subsec:domain-of-application}
+The chosen domain of application for this recommender system is restaurants.
+
+One place the restaurant domain differs from a domain involving a selection of products is that of item accessibility.
+It is assumed that any recommendable product, if chosen, will be readily available - if a product is not available in an area, either the user is not recommended it, recommended an alternative, or provided with an alternative means of access.
+
+Conversely, willingness to go to a restaurant is far more dependent on location, particularly when recommendations are desired - if someone wanted to travel a non-trivial distance, it is most likely they already know what they want.
+Given this, it is proposed the recommender system take into account the proximity of users to restaurants.
+
+\subsection{Review of Related Work}\label{subsec:related-work-review}
+~\cite{sawant2013yelp} presents a hybrid recommender using the Yelp dataset with content-based and collaborative filtering.
+It implements, compares and evaluates several learning algorithms when applied to find both user and item profiles.
+
+~\cite{mcdpk2016} demonstrates a non-hybrid CF recommender which uses the Yelp dataset.
+It uses matrix factorisation to learn a set of latent factors contributing to rating scores.
+
+\subsection{Motivations and Aim}\label{subsec:aim}
+~\cite{chernev2015choice} has shown that an increased variety of available products tend to negatively affect sale conversion rates.
+A key reason is that being presented with lots of options to pick from can be overwhelming, especially when the user does not know exactly what they want.
+Hence, while many restaurants of differing varieties are available, it is better to present users with a sub-set of these.
+
+Recommender systems aim to determine which subset of these products should be shown to the user, looking for the highest likelihood of the user purchasing them.
+This rationale also applies to restaurants - especially in an age of deliveries and takeaways due to the pandemic.
+The ultimate goal is to provide relevant personalised recommendations to known-users.

@@ -1,0 +1,20 @@
+(1) System Design and Development
+- Programming language and testing environment
+- Dataset
+- Hybrid RS
+- Methods/techniques
+- User Interface
+
+(2) Evaluation
+- Offline experiment
+- Evaluation metric:
+    - Accuracy of rating predictions
+    - Accuracy of usage predictions
+    - Novelty, diversity, convergence
+    - Explainability
+- Ethics (three issues plus resolutions)
+- Comparison to baseline
+
+(3) Report
+
+(4) Video

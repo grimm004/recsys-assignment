@@ -1,0 +1,23 @@
+\subsection{Limitations}\label{subsec:limitations}
+While measures have been taken to reduce the sparsity of the data, it is still a significant problem.
+For $n$ users, $m$ restaurants, and $R$ reviews, the rating matrix of size $(n, m)$ has a density of $\rho = \frac{R}{nm}$.
+This means that the preprocessed dataset (of $ n \approx $ \SI{2.1e5} users, $ m \approx $ \SI{1.8e4} restaurants, and $ R \approx $ \SI{2.3e6} reviews) has density of $ \rho \approx $ \SI{6.0e-4} $ \approx 0.06\% $ (this is six times the original sampled density).
+
+\subsection{Further Developments}\label{subsec:further-developments}
+1.
+Investigate the incorporation of the \textit{tip} and \textit{check-in} data in CBF\@.
+
+2.
+Make use of the friends list provided for each user would allow a friend graph to be constructed to help determine trustworthiness and reliability of users based on that of their friends.
+
+3.
+Improve recommendations and overcome the issue of sparsity, pass the filtering models over to cutting edge deep-learning models (as assessed in~\cite{zhang2019deep}).
+
+4.
+Expand the domain to include more of the businesses in the Yelp dataset, as a way to test generalisation with minimal effect on recommendations for the original domain.
+
+%~\nocite{*}
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+\vspace{12pt}
+\color{red}

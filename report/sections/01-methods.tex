@@ -1,0 +1,58 @@
+\subsection{Data Description}\label{subsec:data-description}
+The Yelp dataset~\cite{yelp2020} spans between 2004--2019 and covers a wide number of businesses across many sectors.
+While the majority of the data is for US metropolitan areas, it also covers parts of Canada.
+
+It consists of data tables where each record is a single JSON object with attributes representing the respective item.
+These tables/item-types include businesses, users, reviews, tips, check-ins and Covid-19-related data.
+From here, only the business, user, review, and Covid-19 data will be considered.
+
+The dataset does not include a business unless it has had at least three reviews and only includes reviews that have flagged for recommendation by Yelp.
+For the 36,370 sampled restaurants, there was a mean of 110, median of 40 and standard deviation of 248 sampled reviews.
+For the 1,259,528 sampled users, there was a mean of 3, median of 1 and standard deviation of 9 sampled reviews.
+
+\subsection{Data Preparation and Feature Selection}\label{subsec:data-preparation}
+Where users have reviewed a business more than once, their most recent review is considered.
+Intuitively, this makes sense as the most up-to-date opinion of the user is likely to be the most desirable.
+
+Data exploration showed that the median number of sampled reviews per restaurant is 40, and per user is 1.
+Compared to the product of the number of sampled businesses and users, the number of sampled reviews is very sparse.
+To overcome this, placing a lower-limit on the number of reviews at 40 per restaurant provides a good compromise between sparsity while still using all samples in the upper two quartiles.
+Similarly, a lower-limit of 4 will be placed on the number of reviews per user, thus retaining the majority of samples in the $4^{th}$ quartile.
+This reduces the number of users and businesses with minimal impact on the number of reviews benefiting in a performance increase.
+
+Recommendations can make use of many business features.
+The ones used here are: name, coordinates, categories, whether delivery/takeaway is offered (from Covid-19 data).
+The name and categories of restaurants have a large correlation with the type of food they offer, making this a useful feature for similarity.
+The location is very important for providing nearby recommendations.
+
+\subsection{Recommendation Techniques}\label{subsec:recommendation-techniques}
+The two main components of the recommender system are collaborative filtering (CF) and content-based filtering (CBF), both of which are defined in~\cite{burke2002hybrid}.
+
+For memory-based collaborative filtering, $k$-nearest neighbours (kNN) with the cosine similarity metric~\cite{su2009survey} is used on the sparse user-item rating matrix at runtime.
+For input $k$, matrix $M$ of size $m \times n$ and vector $v$ of length $m$, $k$NN finds the $k$ positions in $M$ whose vectors (length $m$) have the greatest similarity to $v$.
+
+By nature, reviews alone do not necessarily paint the entire picture.
+For example, a user may give a restaurant a negative review because they were put off by one particular thing that no one else would consider.
+Content-based filtering aims to help counteract/dilute this by basing recommendations and restaurant features.
+This is achieved by constructing an item-item similarity matrix based on their features and recommending items based on this.
+
+\subsection{Hybrid Scheme}\label{subsec:hybrid-scheme}
+Weighted hybridisation combines the candidate recommendations.
+The similarity scores for the candidate recommendations provided by CF and CBF are each multiplied by a scalar quantity.
+
+An example of why this is useful is that if both CF and CBF were weighted equally, the recommendations would almost always be dominated by restaurant chains as they tend to have similar/the same features (except for location) and thus get a high similarity rating from CBF\@.
+Because of this, a weighting of 0.7 is used for CBF and 12.0 is used for CF\@.
+
+\subsection{Evaluation Methods}\label{subsec:evaluation-methods}
+Root mean squared error (RMSE) as defined in~\cite{shani2011evaluating} is a metric for testing accuracy of rating predictions and will be applied on CF and the hybrid system independently.
+Knowing this is useful because it helps identify whether any advantage is being gained from using the hybrid model.
+
+Item-space prediction coverage~\cite{ge2010beyond} is a valuable metric given the high sparsity of the review data.
+The definition used here for $I_p$ will be the set of restaurants that can be recommended given the thresholding which turns out to be $18,213$.
+This gives a prediction coverage of $\frac{18,213}{36,370} \approx 0.5 \approx 50\%$.
+
+For the domain of this recommender system, novelty~\cite{kaminskas2016diversity} evaluation is not as applicable.
+While it is not necessarily desirable for a user to visit a new restaurant each time they go, the recommender system still filters out candidate recommendations that the user has previously positively rated.
+
+To evaluate explainability a list of criteria is required.
+The relevant ones for this evaluation include system usability, whether the system matches the motivations and aim, and whether the user is informed of how recommendations are generated.
